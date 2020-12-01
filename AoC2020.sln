@@ -1,0 +1,16 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+Project("{F2A71F9B-5D33-465A-A702-920D77279786}") = "AoC2020", "AoC2020.fsproj", "{249677C9-D968-4960-9850-8E4D3C92465F}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{249677C9-D968-4960-9850-8E4D3C92465F}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{249677C9-D968-4960-9850-8E4D3C92465F}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{249677C9-D968-4960-9850-8E4D3C92465F}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{249677C9-D968-4960-9850-8E4D3C92465F}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+EndGlobal
