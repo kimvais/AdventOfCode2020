@@ -10,8 +10,8 @@ let isTree c =
     | '#' -> 1
     | '.' -> 0
 
-let toboccan y x =
-    readInput "3"
+let toboccan inputFn y x =
+    readInput inputFn 
     |> Seq.filteri (fun i _ -> i % x = 0)
     |> Seq.map Seq.repeatForever
     |> Seq.mapi (takeEveryNth y)
@@ -19,7 +19,7 @@ let toboccan y x =
     |> Seq.sum
 
 let day3 () =
-    toboccan 3 1 |> printfn "%A"
+    toboccan "3" 3 1 |> printfn "%A"
     0
 
 let day3part2 () =
@@ -34,7 +34,7 @@ let day3part2 () =
       (5, 1)
       (7, 1)
       (1, 2) ]
-    |> Seq.map (fun (x, y) -> (toboccan x y |> bigint))
+    |> Seq.map (fun (x, y) -> (toboccan "3" x y |> bigint))
     |> Seq.reduce (*)
     |> printfn "%A"
     0

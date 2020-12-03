@@ -1,4 +1,5 @@
-﻿open System.IO
+﻿module AoC2020.Main
+
 open System.Text.RegularExpressions
 
 open AoC2020.Utils
@@ -88,8 +89,6 @@ let day2 () =
 let day2part2 () =
     countValidPasswords checkValidity2
     0
-
-
 
 
 [<EntryPoint>]
