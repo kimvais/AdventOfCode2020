@@ -90,14 +90,7 @@ let day2part2 () =
     0
 
 
-let day3 () =
-    readInput "3"
-    |> Seq.map Seq.repeatForever
-    |> Seq.mapi takeEveryThird
-    |> Seq.map isTree
-    |> Seq.sum
-    |> printfn "%d"
-    0
+
 
 [<EntryPoint>]
 let main argv =
@@ -108,4 +101,5 @@ let main argv =
     | "2" -> day2 ()
     | "2b" -> day2part2 ()
     | "3" -> day3 ()
+    | "3b" -> day3part2 ()
     | _ -> 1
