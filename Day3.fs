@@ -2,19 +2,6 @@ module AoC2020.Day3
 
 open AoC2020.Utils
 
-module Seq =
-    let repeatForever s =
-        let c = Seq.cache s
-        seq {
-            while true do
-                yield! c
-        }
-
-    let filteri f s =
-        s
-        |> Seq.mapi (fun i v -> (i, v))
-        |> Seq.filter (fun v -> f (fst v) (snd v))
-        |> Seq.map (fun v -> snd v)
 
 let takeEveryNth n i s = s |> Seq.skip (n * i) |> Seq.head
 
