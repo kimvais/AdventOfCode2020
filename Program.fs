@@ -4,6 +4,7 @@ open System.Text.RegularExpressions
 
 open AoC2020.Utils
 open AoC2020.Day3
+open AoC2020.Day4
 
 
 let day1 () =
@@ -90,7 +91,6 @@ let day2part2 () =
     countValidPasswords checkValidity2
     0
 
-
 [<EntryPoint>]
 let main argv =
     let day = argv |> getProblem
@@ -101,4 +101,7 @@ let main argv =
     | "2b" -> day2part2 ()
     | "3" -> day3 ()
     | "3b" -> day3part2 ()
+    | "4" -> day4 ()
+    | "4b" -> day4part2 ()
+    | "test4" -> validatePassports validate2 "valid4"
     | _ -> 1
