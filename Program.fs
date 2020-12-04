@@ -103,5 +103,4 @@ let main argv =
     | "3b" -> day3part2 ()
     | "4" -> day4 ()
     | "4b" -> day4part2 ()
-    | "test4" -> validatePassports validate2 "valid4"
     | _ -> 1

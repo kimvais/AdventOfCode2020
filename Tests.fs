@@ -13,17 +13,17 @@ type Puzzles(o: ITestOutputHelper) =
 
     [<Fact>]
     let ``day 4`` () =
-        let result = validatePassports validate "test4"
+        let result = countValidPassports "test4" validate
         Assert.Equal(result, 2)
 
     [<Fact>]
     let ``day 4 valid`` () =
-        let result = validatePassports validate2 "valid4"
+        let result = countValidPassports "valid4" validate2
         Assert.Equal(4, result)
 
     [<Fact>]
     let ``day 4 invalid`` () =
-        let result = validatePassports validate2 "invalid4"
+        let result = countValidPassports "invalid4" validate2
         Assert.Equal(result, 0)
 
     let ``day 4 fields`` () =
