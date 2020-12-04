@@ -9,10 +9,9 @@ type Password =
       c: char
       s: string }
 
-let parsePassWord pwd =
+let parsePassword pwd =
     // 2-13 k: wkbwczdmrgkklvxpppfx
-    let r =
-        new Regex("(?<minChars>\d+)-(?<maxChars>\d+) (?<chr>\w): (?<password>\w+)")
+    let r = Regex("(?<minChars>\d+)-(?<maxChars>\d+) (?<chr>\w): (?<password>\w+)")
 
     let groups = (r.Match pwd).Groups
 
@@ -38,7 +37,7 @@ let checkValidity2 pwd =
 
 let countValidPasswords checkFn =
     readInput "2"
-    |> Seq.map (parsePassWord >> checkFn)
+    |> Seq.map (parsePassword >> checkFn)
     |> Seq.filter id
     |> Seq.length
     |> printfn "%d"
