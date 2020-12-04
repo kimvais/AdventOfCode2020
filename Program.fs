@@ -1,95 +1,11 @@
 ﻿module AoC2020.Main
 
-open System.Text.RegularExpressions
-
 open AoC2020.Utils
+open AoC2020.Day1
+open AoC2020.Day2
 open AoC2020.Day3
 open AoC2020.Day4
-
-
-let day1 () =
-    let entries =
-        readInput "1" |> Seq.map int32 |> Seq.cache
-
-    Seq.allPairs entries entries
-    |> Seq.filter (fun (a, b) -> (a <> b) && (a + b = 2020))
-    |> Seq.head
-    |> (fun (a, b) -> a * b)
-    |> printfn "%d"
-    0
-
-let combine3 data =
-    let input = data |> Array.ofSeq
-    let l = (Seq.length input - 1)
-    seq {
-        for i in 0 .. l do
-            for j in 0 .. l do
-                for k in 0 .. l do
-                    let a = input.[i]
-                    let b = input.[j]
-                    let c = input.[k]
-                    if Seq.distinct [ a; b; c ] |> Seq.length = 3
-                    then yield [ a; b; c ]
-    }
-
-let day1part2 () =
-    let triplets =
-        readInput "1" |> Seq.map int32 |> combine3
-
-    triplets
-    |> Seq.filter (fun s -> Seq.sum s = 2020)
-    |> Seq.head
-    |> Seq.reduce (*)
-    |> printfn "%d"
-    0
-
-type Password =
-    { min: int
-      max: int
-      c: char
-      s: string }
-
-let parsePassWord pwd =
-    // 2-13 k: wkbwczdmrgkklvxpppfx
-    let r =
-        new Regex("(?<minChars>\d+)-(?<maxChars>\d+) (?<chr>\w): (?<password>\w+)")
-
-    let groups = (r.Match pwd).Groups
-
-    let password =
-        { min = int groups.["minChars"].Value
-          max = int groups.["maxChars"].Value
-          c = char groups.["chr"].Value
-          s = groups.["password"].Value }
-
-    password
-
-let checkValidity1 pwd =
-    let charCount =
-        pwd.s |> Seq.filter ((=) pwd.c) |> Seq.length
-
-    (pwd.min <= charCount) && (pwd.max >= charCount)
-
-let checkValidity2 pwd =
-    [ pwd.s.[pwd.min - 1]
-      pwd.s.[pwd.max - 1] ]
-    |> Seq.filter ((=) pwd.c)
-    |> Seq.length = 1
-
-let countValidPasswords checkFn =
-    readInput "2"
-    |> Seq.map (parsePassWord >> checkFn)
-    |> Seq.filter id
-    |> Seq.length
-    |> printfn "%d"
-
-let day2 () =
-    countValidPasswords checkValidity1
-    0
-
-let day2part2 () =
-    countValidPasswords checkValidity2
-    0
+open AoC2020.Day5
 
 [<EntryPoint>]
 let main argv =
@@ -103,4 +19,6 @@ let main argv =
     | "3b" -> day3part2 ()
     | "4" -> day4 ()
     | "4b" -> day4part2 ()
+    | "5" -> day5 ()
+    | "5b" -> day5part2 ()
     | _ -> 1
