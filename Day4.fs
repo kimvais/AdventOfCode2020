@@ -21,7 +21,6 @@ let validate (passport: Map<string, string>) =
     pid (Passport ID)
     cid (Country ID)
     *)
-    // printfn "%A" passport
     [ "byr"
       "iyr"
       "eyr"
@@ -32,7 +31,7 @@ let validate (passport: Map<string, string>) =
     |> Seq.forall (fun k -> Map.containsKey k passport)
 
 let isBetweenInclusive low high v =
-    let re = Regex("(\d+)")
+    let re = Regex("^(\d+)$")
     let m = re.Match(v)
     m.Groups.[1].Value
     |> int
@@ -52,7 +51,7 @@ let validateEyr = isBetweenInclusive 2020 2030
     If in, the number must be at least 59 and at most 76.
 *)
 let validateHgt hgt =
-    let re = Regex("(\d+)(in|cm)")
+    let re = Regex("^(\d+)(in|cm)$")
     let m = re.Match(hgt)
     match m.Groups.[2].Value with
     | "cm" -> isBetweenInclusive 150 193 m.Groups.[1].Value
@@ -61,17 +60,17 @@ let validateHgt hgt =
 
 // hcl (Hair Color) - a # followed by exactly six characters 0-9 or a-f.
 let validateHcl hcl =
-    let re = Regex("#[0-9a-z]{6}")
+    let re = Regex("^#[0-9a-f]{6}$")
     re.IsMatch(hcl)
 
 // ecl (Eye Color) - exactly one of: amb blu brn gry grn hzl oth.
 let validateEcl ecl =
-    let re = Regex("(amb|blu|brn|gry|grn|hzl|oth)")
+    let re = Regex("^(amb|blu|brn|gry|grn|hzl|oth)$")
     re.IsMatch(ecl)
 
 // pid (Passport ID) - a nine-digit number, including leading zeroes.
 let validatePid pid =
-    let re = Regex("\d{9}")
+    let re = Regex("^\d{9}$")
     re.IsMatch(pid)
 
 let validateField fieldName v =
