@@ -31,5 +31,7 @@ let day5part2 () =
     |> Seq.sort
     |> Seq.windowed 2
     |> Seq.filter (fun [| a; b |] -> b = a + 2I)
+    |> Seq.head
+    |> (fun [| a; _ |] -> a + 1I)
     |> printfn "%A"
     0
