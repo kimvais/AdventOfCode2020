@@ -18,6 +18,13 @@ let makeNumber: (string -> int) =
     >> Seq.mapi getDigitValue
     >> Seq.sum 
 
+let getRowAndCol n =
+    // Not needed for solution, but adding here for completeness sake and in case
+    // we come back to this problem in the following days ...
+    let row = n >>> 3
+    let col = n &&& 0b111
+    (row, col)
+    
 let day5 () =
     readInput "5"
     |> Seq.map makeNumber

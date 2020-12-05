@@ -50,4 +50,12 @@ type Puzzles(o: ITestOutputHelper) =
 
     [<Fact>]
     let ``day 5`` () =
-        Assert.True(567 = makeNumber "BFFFBBFRRR")
+        // BFFFBBFRRR: row 70, column 7, seat ID 567.
+        Assert.Equal(567, makeNumber "BFFFBBFRRR")
+        Assert.Equal((70, 7), getRowAndCol 567)
+        // FFFBBBFRRR: row 14, column 7, seat ID 119.
+        Assert.Equal(119, makeNumber "FFFBBBFRRR")
+        Assert.Equal((14, 7), getRowAndCol 119)
+        // BBFFBBFRLL: row 102, column 4, seat ID 820.
+        Assert.Equal(820, makeNumber "BBFFBBFRLL")
+        Assert.Equal((102, 4), getRowAndCol 820)
