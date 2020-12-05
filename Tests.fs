@@ -50,4 +50,4 @@ type Puzzles(o: ITestOutputHelper) =
 
     [<Fact>]
     let ``day 5`` () =
-        Assert.True(567I = makeNumber "BFFFBBFRRR")
+        Assert.True(567 = makeNumber "BFFFBBFRRR")
