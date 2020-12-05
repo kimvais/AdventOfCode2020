@@ -4,6 +4,7 @@ open Xunit
 open Xunit.Abstractions
 open AoC2020.Day3
 open AoC2020.Day4
+open AoC2020.Day5
 
 type Puzzles(o: ITestOutputHelper) =
     [<Fact>]
@@ -26,6 +27,7 @@ type Puzzles(o: ITestOutputHelper) =
         let result = countValidPassports "invalid4" validate2
         Assert.Equal(result, 0)
 
+    [<Fact>]
     let ``day 4 fields`` () =
         Assert.True(validateByr "2002")
         Assert.False(validateByr "2003")
@@ -45,3 +47,7 @@ type Puzzles(o: ITestOutputHelper) =
 
         Assert.True(validatePid "000000001")
         Assert.False(validatePid "0123456789")
+
+    [<Fact>]
+    let ``day 5`` () =
+        Assert.True(567I = makeNumber "BFFFBBFRRR")
