@@ -8,8 +8,6 @@ let convertToKV (a: Match) =
     let v = a.Groups.["value"].Value
     (k, v)
 
-let splitByTwoLinefeeds s = Regex.Split(s, "\n\n")
-
 let validate (passport: Map<string, string>) =
     (*
     byr (Birth Year)
@@ -96,10 +94,8 @@ let validate2 (passport: Map<string, string>) =
 
 let getPassports inputfile =
 
-    let input =
-        readInput inputfile |> String.concat "\n"
 
-    let passports = input |> splitByTwoLinefeeds
+    let passports = readInputDelimByEmptyLine inputfile
     printfn "Total passports: %d" (Seq.length passports)
     passports
 
@@ -119,10 +115,6 @@ let countValidPassports fn validator =
 
 let day4 () =
     countValidPassports "4" validate
-    |> printfn "Valid passports: %d"
-    0
 
 let day4part2 () =
     countValidPassports "4" validate2
-    |> printfn "Valid passports: %d"
-    0

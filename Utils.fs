@@ -1,6 +1,7 @@
 module AoC2020.Utils
 
 open System.IO
+open System.Text.RegularExpressions
 
 let readLines filePath = File.ReadLines(filePath)
 
@@ -22,3 +23,12 @@ module Seq =
         |> Seq.mapi (fun i v -> (i, v))
         |> Seq.filter (fun v -> f (fst v) (snd v))
         |> Seq.map (fun v -> snd v)
+
+let splitByLinefeed (s: string) = s.Split '\n'
+
+let splitByTwoLinefeeds s = Regex.Split(s, "\n\n")
+
+let readInputDelimByEmptyLine inputfile =
+    readInput inputfile
+    |> String.concat "\n"
+    |> splitByTwoLinefeeds

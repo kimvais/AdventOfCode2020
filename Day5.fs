@@ -29,8 +29,6 @@ let day5 () =
     readInput "5"
     |> Seq.map makeNumber
     |> Seq.max
-    |> printfn "%A"
-    0
 
 let day5part2 () =
     readInput "5"
@@ -40,5 +38,3 @@ let day5part2 () =
     |> Seq.filter (fun [| a; b |] -> b = a + 2)
     |> Seq.head
     |> (fun [| a; _ |] -> a + 1)
-    |> printfn "%d"
-    0

@@ -10,8 +10,6 @@ let day1 () =
     |> Seq.filter (fun (a, b) -> (a <> b) && (a + b = 2020))
     |> Seq.head
     |> (fun (a, b) -> a * b)
-    |> printfn "%d"
-    0
 
 let combine3 data =
     let input = data |> Array.ofSeq
@@ -35,5 +33,3 @@ let day1part2 () =
     |> Seq.filter (fun s -> Seq.sum s = 2020)
     |> Seq.head
     |> Seq.reduce (*)
-    |> printfn "%d"
-    0

@@ -40,12 +40,9 @@ let countValidPasswords checkFn =
     |> Seq.map (parsePassword >> checkFn)
     |> Seq.filter id
     |> Seq.length
-    |> printfn "%d"
 
 let day2 () =
     countValidPasswords checkValidity1
-    0
 
 let day2part2 () =
     countValidPasswords checkValidity2
-    0

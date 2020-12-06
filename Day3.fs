@@ -19,8 +19,7 @@ let toboccan inputFn y x =
     |> Seq.sum
 
 let day3 () =
-    toboccan "3" 3 1 |> printfn "%A"
-    0
+    toboccan "3" 3 1
 
 let day3part2 () =
     (* Right 1, down 1.
@@ -35,6 +34,4 @@ let day3part2 () =
       (7, 1)
       (1, 2) ]
     |> Seq.map (fun (x, y) -> (toboccan "3" x y |> bigint))
-    |> Seq.reduce (*)
-    |> printfn "%A"
-    0
+    |> Seq.reduce (*) |> int

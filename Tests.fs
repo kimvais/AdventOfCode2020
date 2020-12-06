@@ -2,9 +2,11 @@ module AoC2020.Tests
 
 open Xunit
 open Xunit.Abstractions
+open AoC2020.Utils
 open AoC2020.Day3
 open AoC2020.Day4
 open AoC2020.Day5
+open AoC2020.Day6
 
 type Puzzles(o: ITestOutputHelper) =
     [<Fact>]
@@ -59,3 +61,10 @@ type Puzzles(o: ITestOutputHelper) =
         // BBFFBBFRLL: row 102, column 4, seat ID 820.
         Assert.Equal(820, makeNumber "BBFFBBFRLL")
         Assert.Equal((102, 4), getRowAndCol 820)
+
+    [<Fact>]
+    let ``day 6`` () =
+        Assert.Equal(11, readInputDelimByEmptyLine "test6" |> countAnswers)
+        Assert.Equal(6506, day6 ())
+        Assert.Equal(3243, day6part2 ())
+        ()
