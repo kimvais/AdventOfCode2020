@@ -48,6 +48,7 @@ let validateEyr = isBetweenInclusive 2020 2030
     If cm, the number must be at least 150 and at most 193.
     If in, the number must be at least 59 and at most 76.
 *)
+
 let validateHgt hgt =
     let re = Regex("^(\d+)(in|cm)$")
     let m = re.Match(hgt)
@@ -113,8 +114,6 @@ let countValidPassports fn validator =
     |> filterPassports validator
     |> Seq.length
 
-let day4 () =
-    countValidPassports "4" validate
+let day4 fn () = countValidPassports fn validate
 
-let day4part2 () =
-    countValidPassports "4" validate2
+let day4part2 fn () = countValidPassports fn validate2

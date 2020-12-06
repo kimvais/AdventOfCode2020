@@ -13,20 +13,20 @@ open AoC2020.Day7
 let main argv =
     let day = argv |> getProblem
     match day with
-    | "1" -> day1 ()
-    | "1b" -> day1part2 ()
-    | "2" -> day2 ()
-    | "2b" -> day2part2 ()
-    | "3" -> day3 ()
-    | "3b" -> day3part2 ()
-    | "4" -> day4 ()
-    | "4b" -> day4part2 ()
-    | "5" -> day5 ()
-    | "5b" -> day5part2 ()
-    | "6" -> day6 ()
-    | "6b" -> day6part2 ()
-    | "7" -> day7 ()
-    | "7b" -> day7part2 ()
+    | "1" -> day1 "1" ()
+    | "1b" -> day1part2 "1" ()
+    | "2" -> day2 "2" ()
+    | "2b" -> day2part2 "2" ()
+    | "3" -> day3 "3" ()
+    | "3b" -> day3part2 "3" ()
+    | "4" -> day4 "4" ()
+    | "4b" -> day4part2 "4" ()
+    | "5" -> day5 "5" ()
+    | "5b" -> day5part2 "5" ()
+    | "6" -> day6 "6" ()
+    | "6b" -> day6part2 "6" ()
+    | "7" -> day7 "7" ()
+    | "7b" -> day7part2 "7" ()
     | _ -> 1
     |> printfn "%d"
     0

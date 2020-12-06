@@ -15,12 +15,11 @@ let countCommonAnswersInGroup: (seq<string> -> int) =
 
 let countAnswers = countAnswersInGroups >> Seq.sum
 
-let day6 () =
-    readInputDelimByEmptyLine "6"
-    |> countAnswers
+let day6 fn () =
+    readInputDelimByEmptyLine fn |> countAnswers
 
-let day6part2 () =
-    readInputDelimByEmptyLine "6"
+let day6part2 fn () =
+    readInputDelimByEmptyLine fn
     |> Seq.map splitByLinefeed
     |> Seq.map countCommonAnswersInGroup
     |> Seq.sum

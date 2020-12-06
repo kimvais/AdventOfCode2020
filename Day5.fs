@@ -16,7 +16,7 @@ let makeNumber: (string -> int) =
     Seq.map convertToBinary
     >> Seq.rev
     >> Seq.mapi getDigitValue
-    >> Seq.sum 
+    >> Seq.sum
 
 let getRowAndCol n =
     // Not needed for solution, but adding here for completeness sake and in case
@@ -24,14 +24,12 @@ let getRowAndCol n =
     let row = n >>> 3
     let col = n &&& 0b111
     (row, col)
-    
-let day5 () =
-    readInput "5"
-    |> Seq.map makeNumber
-    |> Seq.max
 
-let day5part2 () =
-    readInput "5"
+let day5 fn () =
+    readInput fn |> Seq.map makeNumber |> Seq.max
+
+let day5part2 fn () =
+    readInput fn
     |> Seq.map makeNumber
     |> Seq.sort
     |> Seq.windowed 2

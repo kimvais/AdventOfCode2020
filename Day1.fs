@@ -2,9 +2,9 @@ module AoC2020.Day1
 
 open AoC2020.Utils
 
-let day1 () =
+let day1 fn () =
     let entries =
-        readInput "1" |> Seq.map int32 |> Seq.cache
+        readInput fn |> Seq.map int32 |> Seq.cache
 
     Seq.allPairs entries entries
     |> Seq.filter (fun (a, b) -> (a <> b) && (a + b = 2020))
@@ -25,9 +25,9 @@ let combine3 data =
                     then yield [ a; b; c ]
     }
 
-let day1part2 () =
+let day1part2 fn () =
     let triplets =
-        readInput "1" |> Seq.map int32 |> combine3
+        readInput fn |> Seq.map int32 |> combine3
 
     triplets
     |> Seq.filter (fun s -> Seq.sum s = 2020)

@@ -7,17 +7,18 @@ open AoC2020.Day3
 open AoC2020.Day4
 open AoC2020.Day5
 open AoC2020.Day6
+open AoC2020.Day7
 
 type Puzzles(o: ITestOutputHelper) =
     [<Fact>]
     let ``day 3`` () =
         let result = toboccan "test3" 3 1
-        Assert.Equal(result, 7)
+        Assert.Equal(7, result)
 
     [<Fact>]
     let ``day 4`` () =
         let result = countValidPassports "test4" validate
-        Assert.Equal(result, 2)
+        Assert.Equal(2, result)
 
     [<Fact>]
     let ``day 4 valid`` () =
@@ -27,7 +28,7 @@ type Puzzles(o: ITestOutputHelper) =
     [<Fact>]
     let ``day 4 invalid`` () =
         let result = countValidPassports "invalid4" validate2
-        Assert.Equal(result, 0)
+        Assert.Equal(0, result)
 
     [<Fact>]
     let ``day 4 fields`` () =
@@ -65,6 +66,7 @@ type Puzzles(o: ITestOutputHelper) =
     [<Fact>]
     let ``day 6`` () =
         Assert.Equal(11, readInputDelimByEmptyLine "test6" |> countAnswers)
-        Assert.Equal(6506, day6 ())
-        Assert.Equal(3243, day6part2 ())
+        Assert.Equal(6, day6part2 "test6b" ())
+        Assert.Equal(6506, day6 "6" ())
+        Assert.Equal(3243, day6part2 "6" ())
         ()
