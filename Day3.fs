@@ -17,8 +17,9 @@ let toboccan inputFn y x =
     |> Seq.mapi (takeEveryNth y)
     |> Seq.map isTree
     |> Seq.sum
+    |> int64
 
-let day3 fn () = toboccan fn 3 1
+let day3 fn () = toboccan fn 3 1 
 
 let day3part2 fn () =
     (* Right 1, down 1.
@@ -34,4 +35,4 @@ let day3part2 fn () =
       (1, 2) ]
     |> Seq.map (fun (x, y) -> (toboccan fn x y |> bigint))
     |> Seq.reduce (*)
-    |> int
+    |> int64

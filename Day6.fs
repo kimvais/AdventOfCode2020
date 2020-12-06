@@ -13,7 +13,7 @@ let countCommonAnswersInGroup: (seq<string> -> int) =
     >> Seq.reduce (fun a b -> Set.intersect a b)
     >> Set.count
 
-let countAnswers = countAnswersInGroups >> Seq.sum
+let countAnswers = countAnswersInGroups >> Seq.sum >> int64
 
 let day6 fn () =
     readInputDelimByEmptyLine fn |> countAnswers
@@ -23,3 +23,4 @@ let day6part2 fn () =
     |> Seq.map splitByLinefeed
     |> Seq.map countCommonAnswersInGroup
     |> Seq.sum
+    |> int64

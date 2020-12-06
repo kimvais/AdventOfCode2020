@@ -113,6 +113,7 @@ let countValidPassports fn validator =
     getPassports fn
     |> filterPassports validator
     |> Seq.length
+    |> int64
 
 let day4 fn () = countValidPassports fn validate
 

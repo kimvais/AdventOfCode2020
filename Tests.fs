@@ -3,6 +3,8 @@ module AoC2020.Tests
 open Xunit
 open Xunit.Abstractions
 open AoC2020.Utils
+open AoC2020.Day1
+open AoC2020.Day2
 open AoC2020.Day3
 open AoC2020.Day4
 open AoC2020.Day5
@@ -11,24 +13,38 @@ open AoC2020.Day7
 
 type Puzzles(o: ITestOutputHelper) =
     [<Fact>]
+    let ``day 1`` () =
+        Assert.Equal(858496L, day1 "1" ())
+        Assert.Equal(263819430L, day1part2 "1" ())
+
+    [<Fact>]
+    let ``day 2`` () =
+        Assert.Equal(524L, day2 "2" ())
+        Assert.Equal(485L, day2part2 "2" ())
+
+    [<Fact>]
     let ``day 3`` () =
         let result = toboccan "test3" 3 1
-        Assert.Equal(7, result)
+        Assert.Equal(7L, result)
+        Assert.Equal(265L, day3 "3" ())
+        Assert.Equal(3154761400L, day3part2 "3" ())
 
     [<Fact>]
     let ``day 4`` () =
         let result = countValidPassports "test4" validate
-        Assert.Equal(2, result)
+        Assert.Equal(2L, result)
+        Assert.Equal(260L, day4 "4" ())
+        Assert.Equal(153L, day4part2 "4" ())
 
     [<Fact>]
     let ``day 4 valid`` () =
         let result = countValidPassports "valid4" validate2
-        Assert.Equal(4, result)
+        Assert.Equal(4L, result)
 
     [<Fact>]
     let ``day 4 invalid`` () =
         let result = countValidPassports "invalid4" validate2
-        Assert.Equal(0, result)
+        Assert.Equal(0L, result)
 
     [<Fact>]
     let ``day 4 fields`` () =
@@ -63,10 +79,19 @@ type Puzzles(o: ITestOutputHelper) =
         Assert.Equal(820, makeNumber "BBFFBBFRLL")
         Assert.Equal((102, 4), getRowAndCol 820)
 
+        Assert.Equal(850L, day5 "5" ())
+        Assert.Equal(599L, day5part2 "5" ())
+
     [<Fact>]
     let ``day 6`` () =
-        Assert.Equal(11, readInputDelimByEmptyLine "test6" |> countAnswers)
-        Assert.Equal(6, day6part2 "test6b" ())
-        Assert.Equal(6506, day6 "6" ())
-        Assert.Equal(3243, day6part2 "6" ())
+        Assert.Equal(11L, readInputDelimByEmptyLine "test6" |> countAnswers)
+        Assert.Equal(6L, day6part2 "test6b" ())
+        Assert.Equal(6506L, day6 "6" ())
+        Assert.Equal(3243L, day6part2 "6" ())
         ()
+        
+    [<Fact>]
+    let ``day 7`` () =
+        Assert.Equal(0L, day7 "" ())
+        Assert.Equal(0L, day7part2 "" ())
+        

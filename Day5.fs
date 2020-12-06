@@ -26,7 +26,10 @@ let getRowAndCol n =
     (row, col)
 
 let day5 fn () =
-    readInput fn |> Seq.map makeNumber |> Seq.max
+    readInput fn
+    |> Seq.map makeNumber
+    |> Seq.max
+    |> int64
 
 let day5part2 fn () =
     readInput fn
@@ -36,3 +39,4 @@ let day5part2 fn () =
     |> Seq.filter (fun [| a; b |] -> b = a + 2)
     |> Seq.head
     |> (fun [| a; _ |] -> a + 1)
+    |> int64
