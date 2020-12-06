@@ -10,7 +10,7 @@ let countAnswersInGroups =
 
 let countCommonAnswersInGroup: (seq<string> -> int) =
     Seq.map Set.ofSeq
-    >> Seq.reduce (fun a b -> Set.intersect a b)
+    >> Seq.reduce Set.intersect
     >> Set.count
 
 let countAnswers = countAnswersInGroups >> Seq.sum >> int64
