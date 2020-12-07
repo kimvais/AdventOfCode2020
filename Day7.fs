@@ -3,27 +3,35 @@ module AoC2020.Day7
 open AoC2020.Utils
 open System.Text.RegularExpressions
 
-let ruleRe = Regex("(?<bag>\w+ \w+) bag[s]?")
+let getContents s =
+    let contentsRe =
+        Regex("(?<count>\d+) (?<bag>\w+ \w+) bags?[.,]?")
+
+    let matches = contentsRe.Matches(s)
+    seq {
+        for m in matches do
+            let bag = m.Groups.["bag"].Value
+            let count = m.Groups.["count"].Value
+            (bag, count)
+    }
+
+let getContainer s =
+    let containerRe = Regex("^(?<bag>\w+ \w+) bags contain")
+    containerRe.Match(s).Groups.["bag"].Value
 
 let getRule s =
-    let matches = ruleRe.Matches(s)
-
-    let bags =
-        matches
-        |> Seq.map (fun m -> m.Groups.["bag"].Value)
-
-    let container = bags |> Seq.head
-    let contents = bags |> Seq.tail
+    let container = getContainer s
+    let contents = getContents s
     seq {
-        for bag in contents do
+        for (bag, c) in contents do
             match (bag, container) with
             | ("no other", _) -> ()
             | (_, "shiny gold") -> ()
-            | _ -> yield (bag, container)
+            | _ -> yield (bag, (container, c))
     }
 
 let getRules s =
-    let mutable rules: Map<string, string Set> = Map.empty
+    let mutable rules: Map<string, Set<string * string>> = Map.empty
     for (canBeIn, container) in s do
         let inside =
             match rules.TryFind canBeIn with
@@ -33,7 +41,7 @@ let getRules s =
         rules <- Map.add canBeIn (inside.Add container) rules
     rules
 
-let rec findAllBags (rules: Map<string, string Set>) (bag: string) =
+let rec findAllBags (rules: Map<string, Set<string * string>>) (bag: string) =
     seq {
         let bags =
             match rules.TryFind(bag) with
@@ -41,17 +49,19 @@ let rec findAllBags (rules: Map<string, string Set>) (bag: string) =
             | Some b -> b
 
         yield! bags
-        for bag in bags do
+        for (bag, c) in bags do
             yield! findAllBags rules bag
     }
 
 let day7 fn () =
     let rawRules =
         readInput fn |> Seq.map getRule |> Seq.concat
-
+    // printfn "Raw rules: %A" rawRules
     let rules = rawRules |> getRules
+    // printfn "Rules: %A" rules
+    let bags = findAllBags rules "shiny gold"
+    // printfn "Bags: %A" bags
+    bags |> Seq.distinctBy fst |> Seq.length |> int64
 
-    findAllBags rules "shiny gold" |> Seq.distinct |> Seq.length |> int64
-    
 
 let day7part2 fn () = 0L
