@@ -18,11 +18,10 @@ module Seq =
                 yield! c
         }
 
-    let filteri f s =
-        s
-        |> Seq.mapi (fun i v -> (i, v))
-        |> Seq.filter (fun v -> f (fst v) (snd v))
-        |> Seq.map (fun v -> snd v)
+    let filteri f =
+        Seq.mapi (fun i v -> (i, v))
+        >> Seq.filter (fun v -> f (fst v) (snd v))
+        >> Seq.map snd
 
 let splitByLinefeed (s: string) = s.Split '\n'
 
