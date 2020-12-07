@@ -11,7 +11,7 @@ let getContents s =
     seq {
         for m in matches do
             let bag = m.Groups.["bag"].Value
-            let count = m.Groups.["count"].Value
+            let count = int m.Groups.["count"].Value
             (bag, count)
     }
 
@@ -30,8 +30,10 @@ let getRule s =
             | _ -> yield (bag, (container, c))
     }
 
+let getRule2 s = getContainer s, getContents s
+
 let getRules s =
-    let mutable rules: Map<string, Set<string * string>> = Map.empty
+    let mutable rules: Map<string, Set<string * int>> = Map.empty
     for (canBeIn, container) in s do
         let inside =
             match rules.TryFind canBeIn with
@@ -41,7 +43,16 @@ let getRules s =
         rules <- Map.add canBeIn (inside.Add container) rules
     rules
 
-let rec findAllBags (rules: Map<string, Set<string * string>>) (bag: string) =
+let rec countBags (rules: Map<string, seq<(string * int)>>) outerBag =
+    let innerBags = Map.find outerBag rules
+    match Seq.length innerBags with
+    | 0 -> 0
+    | _ ->
+        innerBags
+        |> Seq.map (fun (color, count) -> count * (countBags rules color + 1))
+        |> Seq.sum
+
+let rec findAllBags (rules: Map<string, Set<string * int>>) (bag: string) =
     seq {
         let bags =
             match rules.TryFind(bag) with
@@ -49,19 +60,21 @@ let rec findAllBags (rules: Map<string, Set<string * string>>) (bag: string) =
             | Some b -> b
 
         yield! bags
-        for (bag, c) in bags do
+        for (bag, _) in bags do
             yield! findAllBags rules bag
     }
 
 let day7 fn () =
-    let rawRules =
-        readInput fn |> Seq.map getRule |> Seq.concat
-    // printfn "Raw rules: %A" rawRules
-    let rules = rawRules |> getRules
-    // printfn "Rules: %A" rules
-    let bags = findAllBags rules "shiny gold"
-    // printfn "Bags: %A" bags
-    bags |> Seq.distinctBy fst |> Seq.length |> int64
+    let rules =
+        readInput fn
+        |> Seq.map getRule
+        |> Seq.concat
+        |> getRules
 
+    findAllBags rules "shiny gold" |> Seq.distinctBy fst |> Seq.length |> int64
 
-let day7part2 fn () = 0L
+let day7part2 fn () =
+    let rules =
+        readInput fn |> Seq.map getRule2 |> Map.ofSeq
+
+    countBags rules "shiny gold" |> int64
