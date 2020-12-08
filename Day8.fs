@@ -45,7 +45,7 @@ let parseCommand s =
 let initialState =
     { Pos = 0
       Acc = 0
-      Visited = Set.empty
+      Visited = Set.singleton 0
       State = Running }
 
 let execute (program: string array) =
