@@ -11,6 +11,7 @@ open AoC2020.Day5
 open AoC2020.Day6
 open AoC2020.Day7
 open AoC2020.Day8
+open AoC2020.Day9
 
 type Puzzles(o: ITestOutputHelper) =
     [<Fact>]
@@ -106,3 +107,8 @@ type Puzzles(o: ITestOutputHelper) =
         Assert.Equal(1451L, day8 "8" ())
         Assert.Equal(8L, day8part2 "test8" ())
         Assert.Equal(1160L, day8part2 "8" ())
+
+    [<Fact>]
+    let ``day 9`` () =
+        Assert.Equal(0L, day9 "9" ())
+        Assert.Equal(0L, day9part2 "9" ())
