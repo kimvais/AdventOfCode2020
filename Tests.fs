@@ -110,5 +110,6 @@ type Puzzles(o: ITestOutputHelper) =
 
     [<Fact>]
     let ``day 9`` () =
-        Assert.Equal(0L, day9 "9" ())
-        Assert.Equal(0L, day9part2 "9" ())
+        Assert.Equal(127L, day9 "test9" 5 ())
+        Assert.Equal(393911906L, day9 "9" 25 ())
+        Assert.Equal(62L, day9part2 "test9" 5 ())
