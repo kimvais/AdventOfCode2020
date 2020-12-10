@@ -53,10 +53,15 @@ let day10part2 (fn: string) () =
         |> Seq.map (fun (a, b) -> (a, Seq.map snd b))
 
 
-    let mutable pathCounts =
-        Map.add 0L 1L Map.empty
-        
+    let mutable pathCounts = Map.add 0L 1L Map.empty
+
     for path in paths' do
         let i, sources = path
-        pathCounts <- pathCounts |> Map.add i (sources |> Seq.map (fun x -> pathCounts.[x]) |> Seq.sum)
+        pathCounts <-
+            pathCounts
+            |> Map.add
+                i
+                   (sources
+                    |> Seq.map (fun x -> pathCounts.[x])
+                    |> Seq.sum)
     pathCounts.[Seq.last ratings]
