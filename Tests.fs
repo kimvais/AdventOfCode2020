@@ -120,3 +120,9 @@ type Puzzles(o: ITestOutputHelper) =
         Assert.Equal(35L, day10 "test10" ())
         Assert.Equal(220L, day10 "test10b" ())
         Assert.Equal(1885L, day10 "10" ())
+    
+    [<Fact>]
+    let ``day10 part 2`` () =
+        Assert.Equal(8L, day10part2 "test10" ())
+        Assert.Equal(19208L, day10part2 "test10b" ())
+        Assert.Equal(2024782584832L, day10part2 "10" ())

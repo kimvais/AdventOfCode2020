@@ -36,7 +36,7 @@ let main argv =
     | "9b" -> day9part2 "9" 25 ()
     | "10" -> day10 "10" ()
     | "10b" -> day10part2 "10" ()
-    | "test" -> day10 "test10b" ()
+    | "test" -> day10part2 "test10" ()
     | _ -> 1L
     |> printfn "%d"
     0
