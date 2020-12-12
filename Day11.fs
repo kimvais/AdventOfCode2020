@@ -4,6 +4,7 @@ open System
 open AoC2020.Utils
 
 let printSeats seats =
+    printfn ""
     for row in seats do
         printfn "%s" (row |> Array.map string |> String.concat "")
 
@@ -26,7 +27,23 @@ let findNeighbours (seats: char [] []) x y =
     |> Seq.filter (fun (x, y) -> areValid x y)
     |> Seq.map (fun (x, y) -> seats.[x].[y])
 
-let findVisible (seats: char [] []) x y = seq { '.' }
+
+let getVectors (maxx: int) (maxy: int) (x: int) (y: int) =
+    seq {
+        Seq.initInfinite (fun i -> (x - i, y)) // North
+        Seq.initInfinite (fun i -> (x - i, y + i)) // Northeast
+        Seq.initInfinite (fun i -> (x, y + i)) // East
+        Seq.initInfinite (fun i -> (x + i, y + i)) // Southeast
+        Seq.initInfinite (fun i -> (x + i, y)) // South
+        Seq.initInfinite (fun i -> (x + i, y - i)) //Southwest
+        Seq.initInfinite (fun i -> (x - i, y)) // West
+        Seq.initInfinite (fun i -> (x - i, y - i)) // Northwest
+    }
+    |> Seq.map (Seq.takeWhile (fun (a, b) -> a >= 0 && a < maxx && b >= 0 && b < maxy))
+    
+let findVisible (seats: char [] []) x y =
+    let vecs = getVectors (Seq.length seats) (Seq.length seats.[0]) x y
+    vecs |> Seq.choose (Seq.tryFind (fun (x,y) -> seats.[x].[y] <> '.')) |> Seq.map (fun (x,y) -> seats.[x].[y])
 
 let countNeighbours findFn seats x y =
     findFn seats x y
@@ -36,38 +53,40 @@ let countNeighbours findFn seats x y =
         | '#' -> 1)
     |> Seq.sum
 
-let getNewState findFn (seats: char [] []) x y =
+let getNewState findFn maxOccupied (seats: char [] []) x y =
     match seats.[x].[y] with
     | '.' -> '.'
     | c ->
         match countNeighbours findFn seats x y with
         | n when n = 0 -> '#'
-        | n when n >= 4 -> 'L'
+        | n when n >= maxOccupied -> 'L'
         | _ -> c
 
-let reseat findFn (seats: char [] []) =
-
+let reseat findFn maxOccupied (seats: char [] []) =
+    printSeats seats
     seq {
         for row in 0 .. (Seq.length seats - 1) do
             yield seq {
                       for col in 0 .. (Seq.length seats.[0] - 1) do
-                          yield getNewState findFn seats row col
+                          yield getNewState findFn maxOccupied seats row col
                   }
                   |> Array.ofSeq
     }
     |> Array.ofSeq
 
-let day11 fn part () =
-    let reseat =
-        match part with
-        | "1" -> reseat findNeighbours
-        | "2" -> reseat findVisible
-
-    let allSeats =
-        readInput fn
+let loadSeatMap fn =
+     readInput fn
         |> Seq.map (Array.ofSeq)
         |> Array.ofSeq
 
+let day11 fn part () =
+    let allSeats = loadSeatMap fn
+    let reseat =
+        match part with
+        | "1" -> reseat findNeighbours 4
+        | "2" -> reseat findVisible 5
+
+       
     let unfolder state =
         let newState = reseat state
         if newState = state then None else Some(newState, newState)
