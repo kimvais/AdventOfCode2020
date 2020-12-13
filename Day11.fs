@@ -29,21 +29,23 @@ let findNeighbours (seats: char [] []) x y =
 
 
 let getVectors (maxx: int) (maxy: int) (x: int) (y: int) =
+    let add1 = (+) 1
     seq {
-        Seq.initInfinite (fun i -> (x - i, y)) // North
-        Seq.initInfinite (fun i -> (x - i, y + i)) // Northeast
-        Seq.initInfinite (fun i -> (x, y + i)) // East
-        Seq.initInfinite (fun i -> (x + i, y + i)) // Southeast
-        Seq.initInfinite (fun i -> (x + i, y)) // South
-        Seq.initInfinite (fun i -> (x + i, y - i)) //Southwest
-        Seq.initInfinite (fun i -> (x - i, y)) // West
-        Seq.initInfinite (fun i -> (x - i, y - i)) // Northwest
+        Seq.initInfinite (add1 >> (fun i -> (x - i, y))) // North
+        Seq.initInfinite (add1 >> (fun i -> (x - i, y + i))) // Northeast
+        Seq.initInfinite (add1 >> (fun i -> (x, y + i))) // East
+        Seq.initInfinite (add1 >> (fun i -> (x + i, y + i))) // Southeast
+        Seq.initInfinite (add1 >> (fun i -> (x + i, y))) // South
+        Seq.initInfinite (add1 >> (fun i -> (x + i, y - i))) //Southwest
+        Seq.initInfinite (add1 >> (fun i -> (x, y - i))) // West
+        Seq.initInfinite (add1 >> (fun i -> (x - i, y - i))) // Northwest
     }
     |> Seq.map (Seq.takeWhile (fun (a, b) -> a >= 0 && a < maxx && b >= 0 && b < maxy))
     
 let findVisible (seats: char [] []) x y =
     let vecs = getVectors (Seq.length seats) (Seq.length seats.[0]) x y
-    vecs |> Seq.choose (Seq.tryFind (fun (x,y) -> seats.[x].[y] <> '.')) |> Seq.map (fun (x,y) -> seats.[x].[y])
+    let coords = vecs |> Seq.choose (Seq.tryFind (fun (x,y) -> seats.[x].[y] <> '.'))
+    coords |> Seq.map (fun (x,y) -> seats.[x].[y])
 
 let countNeighbours findFn seats x y =
     findFn seats x y
@@ -78,7 +80,12 @@ let loadSeatMap fn =
      readInput fn
         |> Seq.map (Array.ofSeq)
         |> Array.ofSeq
-
+        
+let testVisibility (fn:string) x y () =
+    let seats = loadSeatMap fn
+    let visible = findVisible seats x y
+    visible |> Seq.filter ((=) '#') |> Seq.length |> int64
+    
 let day11 fn part () =
     let allSeats = loadSeatMap fn
     let reseat =

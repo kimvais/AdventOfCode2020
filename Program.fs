@@ -40,11 +40,12 @@ let main argv =
     | "10" -> day10 "10" ()
     | "10b" -> day10part2 "10" ()
     | "11" -> day11 "11" "1" ()
+    | "11b" -> day11 "11" "2" ()
     | "12" -> day12 "12" ()
     | "12b" -> day12part2 "12" ()
     | "13" -> day13 "13" ()
     | "13b" -> day13part2 "13" ()
-    | "test" -> day13part2 "test13" ()
+    | "test" -> day11 "test11round3" "2" ()
     | _ -> -1L
     |> printfn "%d"
     0

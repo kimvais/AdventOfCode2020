@@ -134,6 +134,12 @@ type Puzzles(o: ITestOutputHelper) =
     let ``day 11`` () =
         Assert.Equal(37L, day11 "test11" "1" ())
         Assert.Equal(2152L, day11 "11" "1" ())
+
+    [<Fact>]
+    let ``day 11 part 2 visibility algorithm`` () =
+        Assert.Equal(8L, testVisibility "test11b1" 4 3 ())
+        Assert.Equal(0L, testVisibility "test11b2" 1 1 ())
+        Assert.Equal(0L, testVisibility "test11b3" 3 3 ())
         
     [<Fact>]
     let ``day 12`` () =

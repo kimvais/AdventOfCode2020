@@ -1,5 +1,7 @@
 module AoC2020.Math
 
+// Taken from rosettacode.org
+
 //Calculate the Modular Inverse: Nigel Galloway: April 3rd., 2018
 let MI n g =
     let rec fN n i g e l a =
