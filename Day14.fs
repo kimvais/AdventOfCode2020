@@ -29,24 +29,21 @@ let getMask (m: Match) =
     |> Seq.map translate
     |> Array.ofSeq
 
-let applyBit =
+let maskBit =
     function
     | (Bit.Set, _) -> Bit.Set
     | (Bit.Unset, _) -> Bit.Unset
     | (Bit.Keep, n) -> n
 
-let applyBit2 =
+let maskBit2 =
     function
     | (Bit.Set, _) -> Bit.Set
     | (Bit.Unset, n) -> n
     | (Bit.Keep, _) -> Bit.Keep
       
-let applyMask (mask: array<Bit>) (value: array<Bit>) =
-    Array.zip mask value |> Array.map applyBit
+let applyMask bitfn (mask: array<Bit>) (value: array<Bit>) =
+    Array.zip mask value |> Array.map bitfn
 
-let applyMask2 (mask: array<Bit>) (value: array<Bit>) =
-    Array.zip mask value |> Array.map applyBit2
-    
 let getAddressAndValue line =
     let m = memRe.Match(line)
     let addr = m.Groups.["address"].Value
@@ -78,7 +75,7 @@ let printMask m =
         | Bit.Keep -> "X")
     |> String.concat ""
     |> printfn "%d %s" v
-
+    
 let runProgram fn op =
     let instructions = readInput fn
     let mutable mask = Array.create 36 Bit.Keep
@@ -111,7 +108,7 @@ let rec getCombinations (acc: Bit list) tail: seq<Bit list> =
 
 
 let doOp (memory: Map<int64, Bit []>) mask (addr, v) =
-    let newValue = applyMask mask v
+    let newValue = applyMask maskBit mask v
     memory |> Map.add addr newValue
 
 let doOp2 memory (mask: Bit array) (addr: int64, value) =
@@ -120,14 +117,12 @@ let doOp2 memory (mask: Bit array) (addr: int64, value) =
         |> Seq.map translate
         |> Array.ofSeq
     let addrs =
-        getCombinations [] (List.ofArray (applyMask2 mask addr'))
+        getCombinations [] (List.ofArray (applyMask maskBit2 mask addr'))
         |> Seq.map Array.ofList
 
-    // printfn "%A %d" mask (Seq.length addrs)
     let mutable mem = memory
     for addr'' in addrs do
         mem <- mem |> Map.add (getValue addr'') value
-        // printMemory mem
     mem
 
 let day14 fn () = runProgram fn doOp

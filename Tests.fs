@@ -166,3 +166,4 @@ type Puzzles(o: ITestOutputHelper) =
     let ``day 14`` () =
         Assert.Equal(165L, day14 "test14" ())
         Assert.Equal(12512013221615L, day14 "14" ())
+        Assert.Equal(3905642473893L, day14part2 "14" ())
