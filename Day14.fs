@@ -42,20 +42,61 @@ let getAddressAndValue line =
     let m = memRe.Match(line)
     let addr = m.Groups.["address"].Value
     let value = m.Groups.["value"].Value
-    (int addr, (value |> (int >> asBitString >> Seq.map translate >> Array.ofSeq)))
+    (int64 addr,
+     (value
+      |> (int
+          >> asBitString
+          >> Seq.map translate
+          >> Array.ofSeq)))
 
 let getValue bits =
-    bits |> Array.rev |> Array.mapi (fun e b -> bigint (int b) * (2I ** e) |> int64) |> Array.sum
+    bits
+    |> Array.rev
+    |> Array.mapi (fun e b -> bigint (int b) * (2I ** e) |> int64)
+    |> Array.sum
     
-let day14 fn () =
+let doOp memory mask (addr, v) =
+    let newValue = applyMask mask v
+    memory |> Map.add addr newValue
+    
+let runProgram fn op =
     let instructions = readInput fn
     let mutable mask = Array.create 36 Bit.Keep
-    let mutable memory: Map<int,Bit []> = Map.empty
-    let doOp (addr, v) =
-        let newValue = applyMask mask v
-        memory <- memory |> Map.add addr newValue
+    let mutable memory: Map<int64, Bit []> = Map.empty
+
     for line in instructions do
         match maskRe.IsMatch(line) with
         | true -> mask <- getMask (maskRe.Match(line))
-        | false -> doOp (getAddressAndValue line)
-    memory |> Map.map (fun _ v -> getValue v) |> Map.toSeq |> Seq.sumBy snd
+        | false -> memory <- op memory mask (getAddressAndValue line)
+        
+    memory
+    |> Map.map (fun _ v -> getValue v)
+    |> Map.toSeq
+    |> Seq.sumBy snd
+
+let rec getCombinations (acc: Bit list) tail : seq<Bit list> =
+    seq {
+        match tail with
+        | [] -> acc
+        | ls ->
+            let cur = List.head ls
+            let trailer = List.tail ls
+            match cur with
+            | Bit.Set
+            | Bit.Unset -> yield! (getCombinations (acc @ [ cur ]) trailer)
+            | Bit.Keep ->
+                yield! (getCombinations (acc @ [ Bit.Set ]) trailer)
+                yield! (getCombinations (acc @ [ Bit.Unset ]) trailer )
+    } 
+    
+
+let doOp2 memory mask (addr, value) =
+    let masks = getCombinations [] (List.ofArray mask) |> Seq.map Array.ofList
+    printfn "%A %d" mask (Seq.length masks)
+    let mutable mem = memory
+    for mask' in masks do
+        mem <- mem |> Map.add (getValue mask') value
+    mem
+            
+let day14 fn () = runProgram fn doOp
+let day14part2 fn () = runProgram fn doOp2
