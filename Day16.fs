@@ -81,24 +81,26 @@ let eliminate field (ticket: int array) =
 
 let day16part2 fn () =
     let tickets, fields, myTicket = day16loader fn
+    
     let ranges = validRanges fields
-
+    
     let fieldDefs =
         fields
         |> Seq.map (parseField2 (Seq.length fields))
         |> Array.ofSeq
-
+    
     let validTickets =
         Seq.filter (fun t ->
             match Seq.tryPick (isInvalid ranges) t with
             | None -> true
             | Some _ -> false) tickets
-
+    
     for values in validTickets |> Seq.map Array.ofSeq do
         fieldDefs
         |> Array.iteri (fun i v -> (fieldDefs.[i] <- eliminate v values))
+    
     let mutable recognized = Set.empty<int>
-
+    
     let departureFields =
         seq {
             for field in fieldDefs
