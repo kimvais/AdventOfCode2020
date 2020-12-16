@@ -14,7 +14,18 @@ let parseField field =
       m.Groups.[4].Value ]
     |> List.map int
 
-let day16 fn () =
+let isInvalid ranges v =
+    match Seq.forall (fun (lo, hi) -> v < lo || v > hi) ranges with
+    | true -> Some v
+    | false -> None
+
+let validRanges =
+    Seq.map parseField
+    >> Seq.concat
+    >> Seq.chunkBySize 2
+    >> Seq.map (fun [| a; b |] -> a, b)
+
+let day16solver fn =
     let [ fieldData; myTicket; ticketData ] =
         (readInputDelimByEmptyLine fn |> List.ofSeq)
 
@@ -25,19 +36,11 @@ let day16 fn () =
         |> Seq.tail
         |> Seq.map (fun s -> s.Split(",") |> Seq.map int)
 
-    let validRanges =
-        fields
-        |> Seq.map parseField
-        |> Seq.concat
-        |> Seq.chunkBySize 2
-        |> Seq.map (fun [| a; b |] -> a, b)
+    tickets, validRanges fields
 
-    let isInvalid v =
-        match Seq.forall (fun (lo, hi) -> v < lo || v > hi) validRanges with
-        | true -> Some v
-        | false -> None
-
+let day16 fn () =
+    let tickets, ranges = day16solver fn
     tickets
-    |> Seq.choose (Seq.tryPick isInvalid)
+    |> Seq.choose (Seq.tryPick (isInvalid ranges))
     |> Seq.sum
     |> int64

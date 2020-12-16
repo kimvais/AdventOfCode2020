@@ -97,7 +97,7 @@ type Puzzles(o: ITestOutputHelper) =
         Assert.Equal(6506L, day6 "6" ())
         Assert.Equal(3243L, day6part2 "6" ())
         ()
-        
+
     [<Fact>]
     let ``day 7`` () =
         Assert.Equal(4L, day7 "test7" ())
@@ -105,7 +105,7 @@ type Puzzles(o: ITestOutputHelper) =
         Assert.Equal(32L, day7part2 "test7" ())
         Assert.Equal(126L, day7part2 "test7b" ())
         Assert.Equal(30055L, day7part2 "7" ())
-        
+
 
     [<Fact>]
     let ``day 8`` () =
@@ -119,13 +119,13 @@ type Puzzles(o: ITestOutputHelper) =
         Assert.Equal(127L, day9 "test9" 5 ())
         Assert.Equal(393911906L, day9 "9" 25 ())
         Assert.Equal(62L, day9part2 "test9" 5 ())
-        
+
     [<Fact>]
-    let ``day10`` () =
+    let day10 () =
         Assert.Equal(35L, day10 "test10" ())
         Assert.Equal(220L, day10 "test10b" ())
         Assert.Equal(1885L, day10 "10" ())
-    
+
     [<Fact>]
     let ``day10 part 2`` () =
         Assert.Equal(8L, day10part2 "test10" ())
@@ -142,7 +142,7 @@ type Puzzles(o: ITestOutputHelper) =
         Assert.Equal(8L, testVisibility "test11b1" 4 3 ())
         Assert.Equal(0L, testVisibility "test11b2" 1 1 ())
         Assert.Equal(0L, testVisibility "test11b3" 3 3 ())
-        
+
     [<Fact>]
     let ``day 12`` () =
         Assert.Equal(25L, day12 "test12" ())
@@ -155,20 +155,21 @@ type Puzzles(o: ITestOutputHelper) =
 
     [<Fact>]
     let ``day 13 part 2`` () =
-        Assert.Equal(1068781L, solvePart2 "7,13,x,x,59,x,31,19") 
+        Assert.Equal(1068781L, solvePart2 "7,13,x,x,59,x,31,19")
         Assert.Equal(3417L, solvePart2 "17,x,13,19")
         Assert.Equal(754018L, solvePart2 "67,7,59,61")
-        Assert.Equal(779210L, solvePart2 "67,x,7,59,61" )
+        Assert.Equal(779210L, solvePart2 "67,x,7,59,61")
         Assert.Equal(1261476L, solvePart2 "67,7,x,59,61")
         Assert.Equal(1202161486L, solvePart2 "1789,37,47,1889")
-        
+
 
     [<Fact>]
     let ``day 14`` () =
         Assert.Equal(165L, day14 "test14" ())
         Assert.Equal(12512013221615L, day14 "14" ())
         Assert.Equal(3905642473893L, day14part2 "14" ())
-        
+
     [<Fact>]
     let ``day 16`` () =
         Assert.Equal(71L, day16 "test16" ())
+        Assert.Equal(19093L, day16 "16" ())
