@@ -3,8 +3,6 @@ module AoC2020.Day18
 open AoC2020.Utils
 open FParsec
 
-let s = "1 + (2 * 3) + (4 * (5 + 6))"
-
 let token p = p .>> spaces
 let number n = token pint64 n
 let c s = token (skipChar s)
