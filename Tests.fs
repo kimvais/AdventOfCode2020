@@ -178,9 +178,17 @@ type Puzzles(o: ITestOutputHelper) =
 
     [<Fact>]
     let ``day 18`` () =
-        Assert.Equal(71L, (calculate p1) "1 + 2 * 3 + 4 * 5 + 6")
         Assert.Equal(51L, (calculate p1) "1 + (2 * 3) + (4 * (5 + 6))")
+        Assert.Equal(71L, (calculate p1) "1 + 2 * 3 + 4 * 5 + 6")
         Assert.Equal(26L, (calculate p1) "2 * 3 + (4 * 5)")
         Assert.Equal(437L, (calculate p1) "5 + (8 * 3 + 9 + 3 * 4 * 3)")
         Assert.Equal(12240L, (calculate p1) "5 * 9 * (7 * 3 * 3 + 9 * 3 + (8 + 6 * 4))")
         Assert.Equal(13632L, (calculate p1) "((2 + 4 * 9) * (6 + 9 * 8 + 6) + 6) + 2 + 4 * 2")
+        Assert.Equal(51L, (calculate p2) "1 + (2 * 3) + (4 * (5 + 6))")
+        Assert.Equal(231L, (calculate p2) "1 + 2 * 3 + 4 * 5 + 6")
+        Assert.Equal(46L, (calculate p2) "2 * 3 + (4 * 5)")
+        Assert.Equal(1445L, (calculate p2) "5 + (8 * 3 + 9 + 3 * 4 * 3)")
+        Assert.Equal(669060L, (calculate p2) "5 * 9 * (7 * 3 * 3 + 9 * 3 + (8 + 6 * 4))")
+        Assert.Equal(23340L, (calculate p2) "((2 + 4 * 9) * (6 + 9 * 8 + 6) + 6) + 2 + 4 * 2")
+        
+        
