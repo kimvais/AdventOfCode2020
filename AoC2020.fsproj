@@ -25,11 +25,13 @@
         <Compile Include="Day15.fs" />
         <Compile Include="Day16.fs" />
         <Compile Include="Day17.fs" />
+        <Compile Include="Day18.fs" />
         <Compile Include="Tests.fs" />
         <Compile Include="Program.fs" />
     </ItemGroup>
 
     <ItemGroup>
+      <PackageReference Include="FParsec" Version="1.1.1" />
       <PackageReference Include="Microsoft.NET.Test.Sdk" Version="16.9.0-preview-20201123-03" />
       <PackageReference Include="xunit" Version="2.4.1" />
     </ItemGroup>
