@@ -2,6 +2,7 @@ module AoC2020.Utils
 
 open System.IO
 open System.Text.RegularExpressions
+open FParsec
 
 let readLines filePath = File.ReadLines(filePath)
 
@@ -31,3 +32,8 @@ let readInputDelimByEmptyLine inputfile =
     readInput inputfile
     |> String.concat "\n"
     |> splitByTwoLinefeeds
+
+let testParser p str =
+    match run p str with
+    | ParserResult.Success (result, _, _) -> printfn "Success: %A" result
+    | Failure (errorMsg, _, _) -> printfn "Failure: %s" errorMsg
