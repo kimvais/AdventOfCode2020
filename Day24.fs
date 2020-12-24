@@ -27,7 +27,7 @@ let getOffset =
 
 let getNeighbours (x, y) =
     seq {
-        -1, 1
+        -1, -1
         -1, 0
         0, 1
         1, 1
@@ -68,12 +68,21 @@ let day24 fn () =
 
     parseInitial input |> Seq.length |> int64
 
-let staysBlack n = n > 0 && n < 3
-
 let countNeighbours (tiles: Set<int * int>) (x, y) =
     getNeighbours (x, y)
     |> Seq.filter (fun t -> Set.contains t tiles)
     |> Seq.length
+
+let staysBlack tiles xy =
+    match countNeighbours tiles xy with
+    | 1
+    | 2 -> true
+    | _ -> false
+
+let turnsBlack tiles xy =
+    match countNeighbours tiles xy with
+    | 2 -> true
+    | _ -> false
 
 let rec flip rounds r blacks =
     printfn "%d: %d" r (Set.count blacks)
@@ -91,15 +100,15 @@ let rec flip rounds r blacks =
 
         let newBlacks =
             whites
-            |> Seq.filter (fun xy -> (countNeighbours blacks xy) = 2)
+            |> Seq.filter (turnsBlack blacks)
             |> Set.ofSeq
 
-        let staysBlack =
+        let oldBlacks =
             blacks
-            |> Seq.filter (fun xy -> staysBlack (countNeighbours blacks xy))
+            |> Seq.filter (staysBlack blacks)
             |> Set.ofSeq
 
-        let blacks' = Set.union staysBlack newBlacks
+        let blacks' = Set.union oldBlacks newBlacks
 
         flip rounds (r + 1) blacks'
 
