@@ -25,6 +25,16 @@ let getOffset =
     | SE -> 1, 0
     | SW -> 0, -1
 
+let getNeighbours (x, y) =
+    seq {
+        -1, 1
+        -1, 0
+        0, 1
+        1, 1
+        1, 0
+        0, -1
+    }
+    |> Seq.map (fun (x', y') -> (x + x', y + y'))
 
 let rec parseDirections dirs =
     match dirs with
@@ -40,9 +50,7 @@ let rec parseDirections dirs =
         | 'w' -> Some(NW, List.tail ls)
         | 'e' -> Some(NE, List.tail ls)
 
-let day24 fn () =
-    let input = readInput fn
-
+let parseInitial input =
     let directions =
         input
         |> Seq.map (List.ofSeq >> List.unfold parseDirections)
@@ -53,5 +61,50 @@ let day24 fn () =
          >> (List.fold (fun (x1, y1) (x2, y2) -> (x1 + x2, y1 + y2)) (0, 0)))
     |> Seq.countBy id
     |> Seq.filter (fun (_, n) -> n % 2 = 1)
+    |> Seq.map fst
+
+let day24 fn () =
+    let input = readInput fn
+
+    parseInitial input |> Seq.length |> int64
+
+let staysBlack n = n > 0 && n < 3
+
+let countNeighbours (tiles: Set<int * int>) (x, y) =
+    getNeighbours (x, y)
+    |> Seq.filter (fun t -> Set.contains t tiles)
     |> Seq.length
-    |> int64
+
+let rec flip rounds r blacks =
+    printfn "%d: %d" r (Set.count blacks)
+
+    match r with
+    | n when n = rounds -> blacks
+    | _ ->
+        let whites =
+            Set.difference
+                (blacks
+                 |> Seq.map getNeighbours
+                 |> Seq.concat
+                 |> Set.ofSeq)
+                blacks
+
+        let newBlacks =
+            whites
+            |> Seq.filter (fun xy -> (countNeighbours blacks xy) = 2)
+            |> Set.ofSeq
+
+        let staysBlack =
+            blacks
+            |> Seq.filter (fun xy -> staysBlack (countNeighbours blacks xy))
+            |> Set.ofSeq
+
+        let blacks' = Set.union staysBlack newBlacks
+
+        flip rounds (r + 1) blacks'
+
+let day24part2 fn rounds () =
+    let tiles =
+        readInput fn |> parseInitial |> Set.ofSeq
+
+    flip rounds 0 tiles |> Set.count |> int64
